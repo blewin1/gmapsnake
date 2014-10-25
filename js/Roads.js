@@ -54,8 +54,8 @@ var Roads = {
 
 			// Set Id Using Custom Mapping Function
 			nodeData.id = nodeToUniqueId(node.attr('id'));
-			nodeData.lat = node.attr('lat');
-			nodeData.lng = node.attr('lon');
+			nodeData.lat = parseFloat(node.attr('lat'));
+			nodeData.lng = parseFloat(node.attr('lon'));
 
 			// Find Neighbors
 			$(xml).find('way').each(function() {
