@@ -26,6 +26,8 @@
  		var min = -1;
  		var minDistance = 0;
  		for(i = 0; i < Roads.nodes.length; i++){
+ 			if (Roads.nodes[i] == window) { continue; }
+ 			if (Roads.nodes[i] == undefined) { continue; }
  			var latdiff = (map.getCenter().lat() - Roads.nodes[i].lat);
  			var lngdiff = (map.getCenter().lng() - Roads.nodes[i].lng);
  			var D = Math.sqrt(latdiff*latdiff + lngdiff*lngdiff);
@@ -53,6 +55,13 @@
  		min = -1;
  		var location = this;
  		 	$.each(Roads.nodes[this.current].neighbors, function (i) {
+
+ 		 		if (Roads.nodes[location.current] == undefined) { console.log(i); return; }
+ 		 		console.log(Roads.nodes[location.current]);
+ 		 		console.log(Roads.nodes[location.current].neighbors);
+ 		 		console.log(Roads.nodes[location.current].neighbors[i]);
+ 		 		if (Roads.nodes[Roads.nodes[location.current].neighbors[i]] == undefined) { return; }
+
  				var angle = 0;
  				var minangle = 0;
  					//console.log(Roads.nodes[location.current])

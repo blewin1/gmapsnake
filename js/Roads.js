@@ -30,6 +30,7 @@ var Roads = {
 		// Maps Crazy Long Open Data IDs to Short Custom IDs
 		var usedIDs = [];
 		var nextId = 0;
+		
 		var nodeToUniqueId = function(bigId) {
 			ourId = usedIDs.indexOf(bigId);
 			if (ourId == -1) {
@@ -39,6 +40,10 @@ var Roads = {
 			} else {
 				return ourId;
 			}
+		}
+		
+		var shortIdExists = function(bigId) {
+			return usedIDs.indexOf(bigId) >= 0;
 		}
 
 		$(xml).find('node').each(function() {
@@ -57,7 +62,14 @@ var Roads = {
 			nodeData.lat = parseFloat(node.attr('lat'));
 			nodeData.lng = parseFloat(node.attr('lon'));
 
-			// Find Neighbors
+			Roads.nodes[nodeData.id] = nodeData;
+
+		})
+
+		$(xml).find('node').each(function() {
+			var node = $(this);
+			var nodeId = nodeToUniqueId(node.attr('id'));
+
 			$(xml).find('way').each(function() {
 				var way = $(this);
 
@@ -65,37 +77,21 @@ var Roads = {
 				for (var i = 0; i < ndRefs.length; i++) {
 
 					if ($(ndRefs[i]).attr('ref') == node.attr('id')) {
-						if (i > 0) {
-							nodeData.neighbors.push(nodeToUniqueId($(ndRefs[i-1]).attr('ref')));
+						if (i > 0 && shortIdExists($(ndRefs[i-1]).attr('ref'))) {
+							Roads.nodes[nodeId].neighbors.push(nodeToUniqueId($(ndRefs[i-1]).attr('ref')));
 						}
-						if (i < ndRefs.length-1) {
-							nodeData.neighbors.push(nodeToUniqueId($(ndRefs[i+1]).attr('ref')));
+						if (i < ndRefs.length-1 && shortIdExists($(ndRefs[i+1]).attr('ref'))) {
+							Roads.nodes[nodeId].neighbors.push(nodeToUniqueId($(ndRefs[i+1]).attr('ref')));
 						}
 					}
 
 				}
 
-			})
-
-			/*var marker =  new google.maps.Marker({
-				position: new google.maps.LatLng(nodeData.lat, nodeData.lng),
-				map: map,
-				title: nodeToUniqueId(node.attr('id')).toString()
 			});
-
-			var infowindow = new google.maps.InfoWindow({
-			      content: nodeData.neighbors.toString()
-			  });
-
-			google.maps.event.addListener(marker, 'click', function() {
-    			infowindow.open(map,marker);
-  			});*/
-
-			Roads.nodes[nodeData.id] = nodeData;
-
 		})
 
-		//console.log(Roads.nodes);
+		console.log(usedIDs);
+		console.log(Roads.nodes);
 
 		UI.overpassLoaded();
 
