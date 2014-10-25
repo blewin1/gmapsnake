@@ -34,15 +34,27 @@ function initialize() {
     handleNoGeolocation(false);
   }
   hideControls();
+  showControls();
 }
 function hideControls () {
 	if (map != null){
-		console.log(this.map);
-		map.setOptions({disableDefaultUI: true, draggable: false, scrollWheel: false});
+		map.setOptions({disableDefaultUI: true, draggable: false, scrollwheel: false,
+			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "off"}]},
+			{featureType: "poi", elementType: "labels",stylers: [{visibility: "off"}]},
+			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "off"}]}]});
 	}
 }
 function showControls () {
-	map.setOptions({disableDefaultUI: false, draggable: true, scrollWheel: true});
+	if (map != null){
+		map.setOptions({disableDefaultUI: false, draggable: true, scrollwheel: true,
+			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "on"}]},
+			{featureType: "poi", elementType: "labels",stylers: [{visibility: "on"}]},
+			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "on"}]}]});
+	}
+}
+function dropFood () {
+	var isFood = false;
+	if (isFood){}
 }
 
 function handleNoGeolocation(errorFlag) {
