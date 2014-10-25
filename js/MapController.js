@@ -86,7 +86,6 @@ function showControls () {
 }
 
 function dropFood () {
-	return;
 	var isFood = true;
 	var k = 1;
 	if (isFood){
