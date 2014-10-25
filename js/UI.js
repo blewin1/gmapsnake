@@ -8,24 +8,34 @@ var UI = {
 		this.userScore = 0;
 
 		// 7-Segment Display - Premade Code
-		this.scoreDisplay = new SegmentDisplay("score-display");
-		this.scoreDisplay.pattern         = "######";
-		this.scoreDisplay.displayAngle    = 10;
-		this.scoreDisplay.digitHeight     = 20;
-		this.scoreDisplay.digitWidth      = 12;
-		this.scoreDisplay.digitDistance   = 2.5;
-		this.scoreDisplay.segmentWidth    = 2.5;
-		this.scoreDisplay.segmentDistance = 0.5;
-		this.scoreDisplay.segmentCount    = 7;
-		this.scoreDisplay.cornerType      = 3;
-		this.scoreDisplay.colorOn         = "#24dd22";
-		this.scoreDisplay.colorOff        = "#1b4105";
+		display = new SegmentDisplay("score-display");
+		display.pattern         = "######";
+		display.displayAngle    = 10;
+		display.digitHeight     = 20;
+		display.digitWidth      = 12;
+		display.digitDistance   = 2.5;
+		display.segmentWidth    = 2.5;
+		display.segmentDistance = 0.5;
+		display.segmentCount    = 7;
+		display.cornerType      = 3;
+		display.colorOn         = "#24dd22";
+		display.colorOff        = "#1b4105";
+		display.draw();
+
+		display.setValue("000000");
+
+		this.scoreDisplay = display;
+
 	},
 
 	// Called by MapController to 
 	incrementScore: function() {
 		this.userScore += this.pointValue;
-		this.scoreDisplay.setValue(this.userScore);
+		var pad = function(num, size) {
+    		var s = "000" + num;
+    		return s.substr(s.length-size);
+		}
+		this.scoreDisplay.setValue(pad(this.userScore));
 	},
 
 	// Visual Map Data Loaded
