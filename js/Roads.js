@@ -77,9 +77,25 @@ var Roads = {
 
 			})
 
-			Roads.nodes.push(nodeData);
+			/*var marker =  new google.maps.Marker({
+				position: new google.maps.LatLng(nodeData.lat, nodeData.lng),
+				map: map,
+				title: nodeToUniqueId(node.attr('id')).toString()
+			});
+
+			var infowindow = new google.maps.InfoWindow({
+			      content: nodeData.neighbors.toString()
+			  });
+
+			google.maps.event.addListener(marker, 'click', function() {
+    			infowindow.open(map,marker);
+  			});*/
+
+			Roads.nodes[nodeData.id] = nodeData;
 
 		})
+
+		//console.log(Roads.nodes);
 
 		UI.overpassLoaded();
 
