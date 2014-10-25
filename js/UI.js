@@ -4,6 +4,8 @@ var UI = {
 	pointValue: 100,
 	scoreDisplay: null,
 
+	mapReady: false,
+
 	init: function() {
 		this.userScore = 0;
 
@@ -26,7 +28,19 @@ var UI = {
 
 		this.scoreDisplay = display;
 
-		$('#intro-modal').modal();
+		// Display Modal
+		$('#intro-modal').modal({
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
+		});
+		$('#intro-play').click(function() {
+			if (UI.mapReady) {
+				$.modal.close();
+				UI.mapLockAndLoad();
+			}
+			return false;
+		})
 
 	},
 
@@ -44,14 +58,18 @@ var UI = {
 	mapLoaded: function() {
 
 		showControls();		// via MapController
-
-		// Temporary Until UI is Done
-		this.mapLockAndLoad();
+		this.mapReady = true;
 
 	},
 
 	// User Has Specified Position, Call Load Seconday Data
 	mapLockAndLoad: function() {
+
+		$('#loading-modal').modal({
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
+		});
 
 		hideControls();			// via MapController
 
@@ -62,6 +80,9 @@ var UI = {
 
 	// Seconday Map Data Loaded
 	overpassLoaded: function() {
+
+		// Loading Modal
+		$.modal.close();
 
 		dropFood();				// via MapController
 		SnakeController.run();
@@ -81,7 +102,13 @@ var UI = {
 	armageddon: function() {
 
 		// TODO Pause the Snake
-		// Display Modal Window
+	
+		$('#armageddon-modal').modal({
+			escapeClose: false,
+			clickClose: false,
+			showClose: false
+		})
+
 
 	}
 

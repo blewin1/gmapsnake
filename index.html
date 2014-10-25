@@ -43,9 +43,19 @@ $(document).ready(function() {
 
 		<input type="text" id="intro-location" placeholder="Enter a Location" />
 
-		<a href="#" id="intro-play">Let's Play</a>
+		<a href="#" id="intro-play" class="actionbutton">Let's Play!</a>
+	</div>
 
+	<div class="modal" id="armageddon-modal">
+		<h3>Oh No!</h3>
+		<p>Bad things happen if you resize your screen while playing the game! Sorry about that~</p>
 
+		<a href="Javascript:history.go(0);" class="actionbutton">New Game</a>
+	</div>
+
+	<div class="modal" id="loading-modal">
+		Please be patient while we wait for the baby snake to hatch...<br />
+		(This takes about 10-15 seconds.)
 	</div>
 
   </body>
