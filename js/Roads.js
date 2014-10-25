@@ -1,6 +1,10 @@
+//var GLOBAL_START = new Date().getTime();
+
 var Roads = {
 
 	setBounds: function(minLat, minLng, maxLat, maxLng) {
+
+		//console.log(new Date().getTime() - GLOBAL_START);
 
 		var query = "node("+minLat+","+minLng+","+maxLat+","+maxLng+")[highway];out;way(bn);out;";
 		
@@ -23,6 +27,7 @@ var Roads = {
 	nodes: [],
 
 	parseXml: function(xml) {
+		//console.log(new Date().getTime() - GLOBAL_START);
 
 		// Maps Crazy Long Open Data IDs to Short Custom IDs
 		var usedIDs = [];
@@ -44,11 +49,15 @@ var Roads = {
 			// New Node Object to Store
 			var nodeData = {
 				id: 0,
-				neighbors: []
+				neighbors: [],
+				lat: 0,
+				lng: 0
 			};
 
 			// Set Id Using Custom Mapping Function
 			nodeData.id = nodeToUniqueId(node.attr('id'));
+			nodeData.lat = node.attr('lat');
+			nodeData.lng = node.attr('lon');
 
 			// Find Neighbors
 			$(xml).find('way').each(function() {
@@ -73,6 +82,10 @@ var Roads = {
 			Roads.nodes.push(nodeData);
 
 		})
+
+		console.log(Roads.nodes);
+
+		//console.log(new Date().getTime() - GLOBAL_START);
 
 	}
 
