@@ -41,13 +41,9 @@ function initialize() {
     sw = bounds.getSouthWest();
     console.log(sw);
 	mapBounds.minLat = Math.min(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-	console.log(mapBounds.minLat);
 	mapBounds.maxLat = Math.max(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-	console.log(mapBounds.maxLat);
 	mapBounds.minLng = Math.min(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-	console.log(mapBounds.minLng);
 	mapBounds.maxLng = Math.max(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-	console.log(mapBounds.maxLng);
 	UI.mapLoaded();
     }); // end of listener callbck
 
@@ -94,17 +90,14 @@ function dropFood () {
 	var k = 1;
 	if (isFood){
 		var i = Math.floor((Math.random()*Roads.nodes.length)+1);
-		console.log(i);
-		console.log(Roads.nodes[i]);
-		console.log(Roads.nodes[i].lat);
-		console.log(Roads.nodes[i].lng);
 		var nodePos = new google.maps.LatLng(parseFloat(Roads.nodes[i].lat),
 			parseFloat(Roads.nodes[i].lng));
-		console.log(nodePos);
+		var img = 'images/food.png';
 		var marker = new google.maps.Marker({
 			position: nodePos,
 			map: map,
-			title: 'hello'
+			title: 'hello',
+			icon: img
 		});
 		if (k>1) {
 			UI.incrementScore();
