@@ -113,7 +113,7 @@
  	setNextLocation: function() {
  		// check direction of motion
  		// if at an interesection make decision of next intersection to move towards
- 		console.log(this.next );
+ 		console.log(this.next);
 
 
  		if(this.latitude == Roads.nodes[this.next].lat && this.longitude == Roads.nodes[this.next].lng) {
