@@ -69,7 +69,7 @@ function handleNoGeolocation(errorFlag) {
 
 function hideControls () {
 	if (map != null){
-		map.setOptions({disableDefaultUI: true, draggable: false, scrollwheel: false,
+		map.setOptions({keyboardControl: false; disableDefaultUI: true, draggable: false, scrollwheel: false,
 			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "off"}]},
 			{featureType: "poi", elementType: "labels",stylers: [{visibility: "off"}]},
 			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "off"}]}]});
@@ -78,7 +78,7 @@ function hideControls () {
 
 function showControls () {
 	if (map != null){
-		map.setOptions({disableDefaultUI: false, draggable: true, scrollwheel: true,
+		map.setOptions({keyboardControl: true; disableDefaultUI: false, draggable: true, scrollwheel: true,
 			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "on"}]},
 			{featureType: "poi", elementType: "labels",stylers: [{visibility: "on"}]},
 			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "on"}]}]});
