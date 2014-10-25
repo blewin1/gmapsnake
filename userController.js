@@ -26,22 +26,22 @@ var UserControler = {
 			//Set Direction based on arrow keys
 			if(keys[arrows.UP]){
 				if(keys[arrows.LEFT]){
-					SnakeController.setDirection(135);
+					SnakeController.setDirection(3 * Math.PI / 4);  //135
 				} else if(keys[arrows.RIGHT]){
-					SnakeController.setDirection(45);
+					SnakeController.setDirection(Math.PI / 4);  //45
 				} else {
-					SnakeController.setDirection(90);
+					SnakeController.setDirection(Math.PI / 2);  //90
 				}
 			} else if(keys[arrows.DOWN]){
 				if(keys[arrows.LEFT]){
-					SnakeController.setDirection(225);
+					SnakeController.setDirection(5 * Math.PI / 4);  //225
 				} else if(keys[arrows.RIGHT]){
-					SnakeController.setDirection(305);
+					SnakeController.setDirection(7 * Math.PI / 4); //305
 				} else {
-					SnakeController.setDirection(270);
+					SnakeController.setDirection(3 * Math.PI / 2); //270
 				}
 			} else if(keys[arrows.LEFT]){
-				SnakeController.setDirection(180);
+				SnakeController.setDirection(Math.PI);  //180
 			} else if(keys[arrows.RIGHT]){
 				SnakeController.setDirection(0);
 			}
@@ -52,13 +52,15 @@ var UserControler = {
 			if(mode != Modes.MOUSE){
 				return;
 			}
-			var scale = Math.pow(2, map.getZoom());
-			var nw = new google.maps.LatLng(
-			    map.getBounds().getNorthEast().lat(),
-			    map.getBounds().getSouthWest().lng()
-			);
-			var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
-			var worldCoordinate = map.getProjection().fromLatLngToPoint(marker.getPosition());
+			
+			var mapHeight = mapBounds.maxLat - mapBounds.minLat;
+			var mapWidth = mapBounds.maxLng - mapBounds.minLng;
+			
+			var xScale = mapWidth / $("body").width();
+			var yScale = mapHeight / $("body").height();
+
+			var pixX = xScale * 
+
 			var dx = e.pageX - Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale);
 			var dy = e.pageY - Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale);
 
