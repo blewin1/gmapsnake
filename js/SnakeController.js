@@ -57,9 +57,9 @@
  		 	$.each(Roads.nodes[this.current].neighbors, function (i) {
 
  		 		if (Roads.nodes[location.current] == undefined) { console.log(i); return; }
- 		 		console.log(Roads.nodes[location.current]);
- 		 		console.log(Roads.nodes[location.current].neighbors);
- 		 		console.log(Roads.nodes[location.current].neighbors[i]);
+ 		 		//console.log(Roads.nodes[location.current]);
+ 		 		//console.log(Roads.nodes[location.current].neighbors);
+ 		 		//console.log(Roads.nodes[location.current].neighbors[i]);
  		 		if (Roads.nodes[Roads.nodes[location.current].neighbors[i]] == undefined) { return; }
 
  				var angle = 0;
@@ -85,7 +85,7 @@
  						}
  					}
  					location.next = min;
- 					console.log(min);
+ 				//	console.log(min);
  			});
  		//console.log(this);
  				//console.log(this.latitude);
@@ -98,8 +98,12 @@
  		var interval = setInterval( function () {
  			SnakeDraw.drawNewHead(self.latitude, self.longitude, false/*eated*/);
  			self.setNextLocation();
- 			console.log(self.next);
+ 			//console.log(self.next);
  			SnakeDraw.drawNewHead(Roads.nodes[self.next].lat, Roads.nodes[self.next].lng, false)
+ 			console.log(self.current);
+ 			console.log(self.next);
+ 			console.log(self.direction);
+ 			console.log(self.motion);
  			if(this.lose) {
  				clearInterval(interval);
  			}
@@ -109,7 +113,7 @@
  	setNextLocation: function() {
  		// check direction of motion
  		// if at an interesection make decision of next intersection to move towards
- 		console.log(this.next);
+ 		console.log(this.next );
 
 
  		if(this.latitude == Roads.nodes[this.next].lat && this.longitude == Roads.nodes[this.next].lng) {
@@ -126,9 +130,9 @@
  			 		//console.log(this.latitude);
  			$.each(Roads.nodes[this.next].neighbors, function (i) {
  				var angle = 0;
- 				 	console.log(i);
+// 				 	console.log(i);
 
- 					console.log(Roads.nodes[Roads.nodes[location.next].neighbors[i]]);
+ //					console.log(Roads.nodes[Roads.nodes[location.next].neighbors[i]]);
  				if(Roads.nodes[location.next].neighbors[i] != location.current) {
 
 
@@ -174,7 +178,7 @@
 
  		else {
  			this.latitude = this.latitude - this.step * Math.cos(this.motion/* 2 * Math.PI / 360*/);
- 			this.longitude = this.longitude + this.step * Math.sin(this.motion /* 2 * Math.PI / 360*/);
+ 			this.longitude = this.longitude - this.step * Math.sin(this.motion /* 2 * Math.PI / 360*/);
  		}
  		//console.log(D);
  		var test = Math.atan2(Roads.nodes[this.next].lng - Roads.nodes[this.current].lng, Roads.nodes[this.next].lat - Roads.nodes[this.current].lat);
