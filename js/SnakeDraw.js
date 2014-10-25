@@ -7,7 +7,7 @@ var SnakeDraw = {
 		// If Snake Has Not Grown, Remove Last Point
 		// Don't Be an Idiot and Put the New Element On First
 		if (!hasGrown && this.markers.length > 0) {
-			this.markers.pop().setMap(null)
+			//this.markers.pop().setMap(null)
 		}
 
 		var coord = new google.maps.LatLng(lat, lng);
