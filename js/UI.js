@@ -43,14 +43,8 @@ var UI = {
 
 		hideControls();			// via MapController
 
-		bounds = getBounds();//getBounds();
-		console.log(bounds);
-		var minLat = Math.min(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-		var maxLat = Math.max(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-		var minLng = Math.min(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-		var maxLng = Math.max(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-
-		Roads.setBounds(minLat, minLng, maxLat, maxLng);
+		Roads.setBounds(mapBounds.minLat, mapBounds.minLng, 
+			mapBounds.maxLat, mapBounds.maxLng);
 
 	},
 

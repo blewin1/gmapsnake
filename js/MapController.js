@@ -34,8 +34,23 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+  google.maps.event.addListener(map,'bounds_changed', function() {
+    var bounds = map.getBounds();
+    ne = bounds.getNorthEast();
+    console.log(ne);
+    sw = bounds.getSouthWest();
+    console.log(sw);
+	mapBounds.minLat = Math.min(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
+	console.log(mapBounds.minLat);
+	mapBounds.maxLat = Math.max(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
+	console.log(mapBounds.maxLat);
+	mapBounds.minLng = Math.min(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
+	console.log(mapBounds.minLng);
+	mapBounds.maxLng = Math.max(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
+	console.log(mapBounds.maxLng);
+	UI.mapLoaded();
+    }); // end of listener callbck
 
-  UI.mapLoaded();
 
 }
 
@@ -103,8 +118,13 @@ function dropFood () {
 	}
 }
 
-function getBounds () {
-	return map.getBounds();
+var mapBounds = {
+	ne: null,
+	sw: null,
+	minLat: null,
+	maxLat: null,
+	minLng: null,
+	maxLng: null
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
