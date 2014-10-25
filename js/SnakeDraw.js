@@ -2,9 +2,12 @@ var SnakeDraw = {
 
 	markers: [],
 
-	drawNewHead: function(coord, hasGrown) {
+	drawNewHead: function(lat, lng, hasGrown) {
+
+		var coord = new google.maps.LatLng(lat, lng);
+
 		var marker =  new google.maps.Marker({
-			position: coords[i],
+			position: coord,
 			map: map,
 		});
 		markers.push(marker);
