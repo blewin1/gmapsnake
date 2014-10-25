@@ -5,11 +5,10 @@
 
 
 var map;
-console.log(map);
 
 function initialize() {
   var mapOptions = {
-    zoom: 6
+    zoom: 15
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -34,6 +33,16 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+  hideControls();
+}
+function hideControls () {
+	if (map != null){
+		console.log(this.map);
+		map.setOptions({disableDefaultUI: true, draggable: false, scrollWheel: false});
+	}
+}
+function showControls () {
+	map.setOptions({disableDefaultUI: false, draggable: true, scrollWheel: true});
 }
 
 function handleNoGeolocation(errorFlag) {
@@ -45,17 +54,24 @@ function handleNoGeolocation(errorFlag) {
   
     var options = {
         map: map,
-        position: new google.maps.LatLng(60, 105),
+        position: new google.maps.LatLng(40.758955, -73.978868),
         content: content
     };
   
-    var infowindow = new google.maps.InfoWindow(options);
+    //var infowindow = new google.maps.InfoWindow(options);
     map.setCenter(options.position);
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
-var MapController = {
-	map: map
+var MapController = { 
+/*	hideControls: function () {
+		console.log(map);
+		map.mapOptions(disableDefaultUI);
+	},
+	showControls: function () {
+		map.mapOptions(disableDefaultUI);
+	}*/
+
 }
