@@ -1,0 +1,24 @@
+html, body, #map-canvas {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+#ui-bar {
+	background: #5580DC;
+	color:white;
+	font-family: Arial;
+	position: relative;
+}
+
+#ui-bar h1 {
+	margin:0;
+	padding:10px;
+	font-weight: normal;
+}
+
+#score {
+	position: absolute;
+	top:0;
+	right:0;
+}

@@ -4,15 +4,11 @@
     <title>Geolocation</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-    </style>
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="js/UI.js"></script>
     <script>
 // Note: This example requires that you consent to location sharing when
 // prompted by your browser. If you see a blank space instead of the map, this
@@ -68,9 +64,19 @@ function handleNoGeolocation(errorFlag) {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+$(document).ready(function() {
+	UI.init();	
+})
+
+
     </script>
   </head>
   <body>
+  	<div id="ui-bar">
+  		<h1 class="mainlogo">GMapSnake</h1>
+  		<div id="score">Score: <span id="scoreValue">0</span></div>
+  	</div>
+
     <div id="map-canvas"></div>
   </body>
 </html>
