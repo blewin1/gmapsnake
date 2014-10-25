@@ -72,7 +72,7 @@ function showControls () {
 
 function dropFood () {
 	var isFood = true;
-	var i = 1;
+	var k = 1;
 	if (isFood){
 		var i = Math.floor((Math.random()*Roads.nodes.length)+1);
 		console.log(i);
@@ -87,7 +87,7 @@ function dropFood () {
 			map: map,
 			title: 'hello'
 		});
-		if (i>1) {
+		if (k>1) {
 			UI.incrementScore();
 		}
 		isFood = false;
@@ -99,6 +99,9 @@ function dropFood () {
 	}
 }
 
+function getBounds () {
+	return map.getBounds();
+}
 
 google.maps.event.addDomListener(window, 'load', initialize);
 window.setTimeout(dropFood,5000);
