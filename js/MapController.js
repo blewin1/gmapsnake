@@ -33,28 +33,6 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
-  hideControls();
-  showControls();
-}
-function hideControls () {
-	if (map != null){
-		map.setOptions({disableDefaultUI: true, draggable: false, scrollwheel: false,
-			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "off"}]},
-			{featureType: "poi", elementType: "labels",stylers: [{visibility: "off"}]},
-			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "off"}]}]});
-	}
-}
-function showControls () {
-	if (map != null){
-		map.setOptions({disableDefaultUI: false, draggable: true, scrollwheel: true,
-			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "on"}]},
-			{featureType: "poi", elementType: "labels",stylers: [{visibility: "on"}]},
-			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "on"}]}]});
-	}
-}
-function dropFood () {
-	var isFood = false;
-	if (isFood){}
 }
 
 function handleNoGeolocation(errorFlag) {
@@ -74,16 +52,53 @@ function handleNoGeolocation(errorFlag) {
     map.setCenter(options.position);
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-
-var MapController = { 
-/*	hideControls: function () {
-		console.log(map);
-		map.mapOptions(disableDefaultUI);
-	},
-	showControls: function () {
-		map.mapOptions(disableDefaultUI);
-	}*/
-
+function hideControls () {
+	if (map != null){
+		map.setOptions({disableDefaultUI: true, draggable: false, scrollwheel: false,
+			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "off"}]},
+			{featureType: "poi", elementType: "labels",stylers: [{visibility: "off"}]},
+			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "off"}]}]});
+	}
 }
+
+function showControls () {
+	if (map != null){
+		map.setOptions({disableDefaultUI: false, draggable: true, scrollwheel: true,
+			styles: [{featureType: "transit", elementType: "labels",stylers: [{visibility: "on"}]},
+			{featureType: "poi", elementType: "labels",stylers: [{visibility: "on"}]},
+			{featureType: "administrative", elementType: "labels",stylers: [{visibility: "on"}]}]});
+	}
+}
+
+function dropFood () {
+	var isFood = true;
+	var i = 1;
+	if (isFood){
+		var i = Math.floor((Math.random()*Roads.nodes.length)+1);
+		console.log(i);
+		console.log(Roads.nodes[i]);
+		console.log(Roads.nodes[i].lat);
+		console.log(Roads.nodes[i].lng);
+		var nodePos = new google.maps.LatLng(parseFloat(Roads.nodes[i].lat),
+			parseFloat(Roads.nodes[i].lng));
+		console.log(nodePos);
+		var marker = new google.maps.Marker({
+			position: nodePos,
+			map: map,
+			title: 'hello'
+		});
+		if (i>1) {
+			UI.incrementScore();
+		}
+		isFood = false;
+	} else {
+		if (SnakeController.getPosition()= marker.position) {
+			clearMarkers();
+			isFood = true;
+		}
+	}
+}
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+window.setTimeout(dropFood,5000);
