@@ -12,34 +12,34 @@ var UserController = {
 		var keys = [];
 
 		var keyhandle = function(e){
-			console.log("KEYSTROKE!")
+		//	console.log("KEYSTROKE!")
 			keys[e.keyCode] = (e.type == 'keydown');
 		
-			var arrows = {DOWN: 14, UP: 38, LEFT: 37, RIGHT: 39};
+			var arrows = {DOWN: 40, UP: 38, LEFT: 37, RIGHT: 39};
 			//Set Direction based on arrow keys
 			if(keys[arrows.UP]){
 				if(keys[arrows.LEFT]){
-					SnakeController.setDirection(3 * Math.PI / 4);  //135
-					console.log("UP LEFT");
+					SnakeController.setDirection(5 * Math.PI / 4);  //135
+		//			console.log("UP LEFT");
 				} else if(keys[arrows.RIGHT]){
-					SnakeController.setDirection(Math.PI / 4);  //45
-					console.log("UP RIGHT");
+					SnakeController.setDirection(3 * Math.PI / 4);  //45
+		//			console.log("UP RIGHT");
 				} else {
-					SnakeController.setDirection(Math.PI / 2);  //90
-					console.log("UP");
+					SnakeController.setDirection(Math.PI);  //90
+		//			console.log("UP");
 				}
 			} else if(keys[arrows.DOWN]){
 				if(keys[arrows.LEFT]){
-					SnakeController.setDirection(5 * Math.PI / 4);  //225
+					SnakeController.setDirection(7 * Math.PI / 4);  //225
 				} else if(keys[arrows.RIGHT]){
-					SnakeController.setDirection(7 * Math.PI / 4); //305
+					SnakeController.setDirection(Math.PI / 4); //305
 				} else {
-					SnakeController.setDirection(3 * Math.PI / 2); //270
+					SnakeController.setDirection(0); //270
 				}
 			} else if(keys[arrows.LEFT]){
-				SnakeController.setDirection(Math.PI);  //180
+				SnakeController.setDirection(3 * Math.PI / 2);  //180
 			} else if(keys[arrows.RIGHT]){
-				SnakeController.setDirection(0);
+				SnakeController.setDirection(Math.PI / 2);
 			}
 		}
 

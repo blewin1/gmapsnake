@@ -16,7 +16,7 @@
  	length: 1,
  	current: 0,
  	next: -1,
- 	step: 0.0001,
+ 	step: 0.0004,
 
  	coveredNodes: [],
  	lose : false,
@@ -63,10 +63,10 @@
  		 		if (Roads.nodes[Roads.nodes[location.current].neighbors[i]] == undefined) { return; }
 
  				var angle = 0;
- 				var minangle = 0;
+ 				var minangle = 270;
  					//console.log(Roads.nodes[location.current])
  					angle = Math.atan2(Roads.nodes[Roads.nodes[location.current].neighbors[i]].lng - location.longitude, Roads.nodes[Roads.nodes[location.current].neighbors[i]].lat - location.latitude);
- 					angle = angle + Math.PI + .1;
+ 					//angle = angle + Math.PI;
 					//angle = Math.atan2(location.longitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lng , location.latitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lat);
  					
  					/*if (angle < 0) {angle = angle + 2*Math.PI}
@@ -89,7 +89,7 @@
  			});
  		//console.log(this);
  				//console.log(this.latitude);
- 		console.log(this.next);
+ 		console.log("NEXT FIRST TIME:" +this.next);
  	},
 
  	run: function() {
@@ -99,21 +99,21 @@
  			SnakeDraw.drawNewHead(self.latitude, self.longitude, false/*eated*/);
  			self.setNextLocation();
  			//console.log(self.next);
- 			SnakeDraw.drawNewHead(Roads.nodes[self.next].lat, Roads.nodes[self.next].lng, false)
- 			console.log(self.current);
- 			console.log(self.next);
- 			console.log(self.direction);
- 			console.log(self.motion);
+ 			// SnakeDraw.drawNewHead(Roads.nodes[self.next].lat, Roads.nodes[self.next].lng, false)
+ 			// console.log("CURRENT: " +self.current);
+ 			// console.log("NEXT: " +self.next);
+ 			// console.log("DIRECTION: " +self.direction);
+ 			// console.log("MOTION: " +self.motion);
  			if(this.lose) {
  				clearInterval(interval);
  			}
- 		}, 250);
+ 		}, 150);
  	},
 
  	setNextLocation: function() {
  		// check direction of motion
  		// if at an interesection make decision of next intersection to move towards
- 		console.log(this.next);
+ 		console.log("NEXT: " +this.next);
 
 
  		if(this.latitude == Roads.nodes[this.next].lat && this.longitude == Roads.nodes[this.next].lng) {
@@ -155,6 +155,7 @@
  							location.motion = angle;
  						}
  					}
+ 					console.log("next neighbor: " , Roads.nodes[Roads.nodes[location.next].neighbors[i]])
  				}
  			});
 
@@ -193,5 +194,6 @@
 
  	setDirection: function(theta) {
  		this.direction = theta;
+ 		console.log("Direction: " + this.direction)
  	}
 }
