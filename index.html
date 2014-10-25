@@ -1,242 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cashtagApp">
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-	<title>Cashtag</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href='http://fonts.googleapis.com/css?family=Sniglet' rel='stylesheet' type='text/css'>
-	<link href="css/bootply.css" rel="stylesheet" type="text/css" />
-	<link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
-	<link href="css/theme/jquery-ui.css" rel="stylesheet" type="text/css" />
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js" />
-	<script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-	<script type='text/javascript' src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true&extension=.js&output=embed"></script>
+    <script>
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
 
-	<script type="text/javascript" src="js/controller.js"></script>
-	<script type="text/javascript" src="js/login.js"></script>
-	<script type="text/javascript" src="js/sidebar.js"></script>
-	<script type="text/javascript" src="js/map.js"></script>
-	<script type="text/javascript" src="js/ajax.js"></script>
+var map;
 
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="js/trends.js"></script>
-		<!--[if lt IE 9]>
-		  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		  <![endif]-->
-</head>
+function initialize() {
+  var mapOptions = {
+    zoom: 6
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
 
-<body>
-	<div id="info-screen">
-		<div class="navbar navbar-custom navbar-fixed-top">
-			<div class="navbar-header">
-				<a href"/">
-					<img class="nav-logo" src="img/cashtag_full_white.png" alt="CASHTAG">
-				</a>
-				<a class="navbar-toggle page-change" data-panel="category-page" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav" id="all-nav-categories">
-					<li style="margin-top:10px;margin-right:15px; font-size:20px;">Show</li>
-					<li><a href="#" class="map-filter" data-filter="ALL">All</a></li>
-					<li><a href="#" class="map-filter" data-filter="Food">Food</a></li>
-					<li><a href="#" class="map-filter" data-filter="Drinks">Drinks</a></li>
-					<li><a href="#" class="map-filter" data-filter="Entertainment">Entertainment</a></li>
-					<li><a href="#" class="map-filter" data-filter="Shopping">Shopping</a></li>
-					<li><a href="#" class="map-filter" data-filter="Misc">Misc</a></li>
-					<li>&nbsp;</li>
-				
-					
-					<li>&nbsp;</li>
-				</ul>
-				<form class="navbar-form">
-					<div class="form-group" style="display:inline;">
-						<div class="input-group">
-							<div class="input-group-btn">
-								<!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></button>-->
-								<ul class="dropdown-menu">
-									<li><a href="#">budgetbar 1</a></li>
-									<li><a href="#">budgetbar 2</a></li>
-									<li><a href="#">budgetbar 3</a></li>
-									<li><a href="#">budgetbar 4</a></li>
-									<li><a href="#">budgetbar 5</a></li> 
-								</ul>
-							</div>
-							<!--<input type="text" class="form-control" placeholder="What are searching for?"> -->
-							<!--<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span> </span>-->
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
 
-		<div id="map-canvas"></div>
-		<div class="container-fluid" id="main">
-			<div class="row">
-				<div class="col-xs-8" id="left">
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Location found using HTML5.'
+      });
 
-					<!--<h2>Bootstrap Google Maps Demo</h2>-->
-					<!--<img src="cashtag_full.png"> -->
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+}
 
-					<!-- item list -->
-					<!--<div class="panel panel-default">-->
-					<div id="home-page" class="panel panel-active">
-						<div>
-							<!--<div class="panel-heading"><a href="">Item heading</a></div>-->
-							<div class="button_div">
-								<button type="button" class="button page-change" data-panel="add-purchase-page">Add a New Purchase</button>
-							</div>		
-						</div>
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
 
-						<h2>My Budget</h2>
-						<hr>
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(60, 105),
+    content: content
+  };
 
-						<div id="budget_list">
-							
-						</div>
-						<div class="budget_button_div">
-							<button type="button" class="budget_button page-change" data-panel="budget-page">Edit Budget</button>
-						</div>	
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
 
-						<h2>Recent Purchases</h2>
-						<hr>
-						<ul ng-controller="PurchaseListCtrl">
-							<li ng-repeat="item in items">
-								{{ item.location }} - ${{ item.cost }}
-							</li>
-						</ul>
-						<table id="purchases"></table>
-						<button type="button" id="trends-button" class="page-change" onclick="showTrends()">Show Spending Trends</button>
-						<hr>
-					</div> <!-- /done homepage -->
+google.maps.event.addDomListener(window, 'load', initialize);
 
-
-
-					<div class="panel" id="category-page">
-						<ul class="nav navbar-nav" id="all-nav-categories">
-							<li style="margin:20px;">Show</li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="ALL">All</a></li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="Food">Food</a></li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="Drinks">Drinks</a></li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="Entertainment">Entertainment</a></li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="Shopping">Shopping</a></li>
-							<hr>
-							<li><a href="#" class="map-filter page-change" data-filter="Misc">Misc</a></li>
-							<hr>
-							<li>&nbsp;</li>
-						</ul>
-						
-					</div>
-
-
-					<div id="add-purchase-page" class="panel">
-
-						<h2>Add a New Purchase</h2>
-						<hr>
-						<div class="content">
-
-							<form id="purchase-form" action="" method="post">
-							Location:
-							<input type="text" name="purchase_loc" id="purchase_loc" placeholder="   Enter location of purchase">
-							
-							<div style="margin-top:10px; margin-bottom:10px;"><!-- TODO: Move to CSS -->
-								Category: 
-								<select class="dropdown" id="purchase_type" name="purchase_type">
-									<option name="Food">Food</option>
-									<option name="Drinks">Drinks</option>
-									<option name="Entertainment">Entertainment</option>
-									<option name="Shopping">Shopping</option>
-									<option name="Misc">Misc</option>
-								</select>
-							</div>
-							<div id="amount-div">
-								
-								<span style="font-size: 30px; color: #168ccc;" ><img id="dollar" src="img/dollarsign.png"> </span> 
-									<input type="text" name="purchase_cost" id="purchase_cost" placeholder="   Enter Amount">
-								
-								<div id="add-buttons">
-									<span>
-										<input type="submit" id="save-add-button" value="Add" />
-									</span>
-									<span>
-										<button type="button" id="cancel-button" class="page-change">Cancel</button>
-									</span>
-								</div>
-
-							</div>
-
-						</form>
-						</div>
-
-					</div> <!-- /done add purchase -->
-
-					<div id="budget-page" class="panel">
-
-						<h2>My Budget</h2>
-						<hr>
-						<div class="content">
-							<form id="budget-form" method="post" action="">
-							<table class="budget-table" ng-controller="BudgetListCtrl">
-								<tr ng-repeat="item in items" ng-show="!$last">
-									<td>{{ item.name }}</td>
-									<td>
-										<span><img src="img/dollarsign.png"></span>
-										<input type="text" name="{{ item.name|lowercase }}-budget" id="{{ item.name|lowercase }}-budget" value="{{ item.initial }}">
-									</td>
-								</tr>
-							</table>
-
-							<input type="submit" id="save-budget-button" value="Save Changes" />
-
-							</form>
-
-							<button type="button" id="cancel-budget-button" class="page-change">Cancel</button>
-						</div>
-
-					</div> <!-- /done budget page -->
-					<div id="trends-page" class="panel">
-
-						<h2>Trends</h2>
-						<hr>
-
-						<div class="content">
-							
-							<div id="amount-div">
-								<div id="add-buttons">
-
-									<button type="button" id="show-pie-graph-button" onclick="displayPieGraph()">Spending by Type</button>
-
-									<button type="button" id="show-bar-graph-button" onclick="displayBarGraph()">Cost Breakdown</button>
-									<button type="button" id="cancel-budget-button" class="page-change" onclick="hideTrends()">Cancel</button>
-								</div>
-							</div>
-
-						</div>
-
-					</div> <!-- /done trends page -->
-				</div>
-				<div id="map"><!--  col-xs-4 map-canvas will be postioned here--></div>
-
-
-				<div id="trends-div"><div id='pie'></div><div id='his'></div></div>
-
-
-		</div>
-	</div>
-	</div>
-
-
-</body>
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
 </html>
