@@ -14,11 +14,9 @@ var Roads = {
 			dataType: "xml",
 			success: function(xml) {
 				Roads.parseXml(xml);
-				// TODO Send Message to Interface
 			},
 			error: function(e) {
-				alert('Could Not Access API');
-				// TODO Send Message to Interface
+				UI.overpassLoadError();
 			}
 		})
 
@@ -83,7 +81,7 @@ var Roads = {
 
 		})
 
-		console.log(Roads.nodes);
+		UI.overpassLoaded();
 
 		//console.log(new Date().getTime() - GLOBAL_START);
 

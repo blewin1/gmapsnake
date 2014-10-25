@@ -15,21 +15,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	// Put Any Other Init Scripts Here
 	UI.init();
-
-	window.setTimeout(function() {
-
-		bounds = map.getBounds();
-
-	var minLat = Math.min(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-	var maxLat = Math.max(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
-
-	var minLng = Math.min(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-	var maxLng = Math.max(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
-
-		Roads.setBounds(minLat, minLng, maxLat, maxLng);
-	}, 2000)
-	
 })
 </script>
 
