@@ -7,9 +7,11 @@
 	<link href="css/normalize.css" rel="stylesheet" />
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
 	<link href="css/main.css" rel="stylesheet" />
+	<link href="libraries/modal-master/jquery.modal.css" rel="stylesheet" />
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="libraries/segment-display.js"></script>
+	<script src="libraries/modal-master/jquery.modal.min.js" type="text/javascript"></script>
 	<script src="js/UI.js"></script>
 	<script src="js/MapController.js" type="text/javascript"></script>
 	<script src="js/SnakeDraw.js" type="text/javascript"></script>
@@ -26,12 +28,25 @@ $(document).ready(function() {
   </head>
   <body>
 	<div id="ui-bar">
-		<h1 class="mainlogo">GMapSnake</h1>
+		<h1 class="mainlogo">StreetSnake</h1>
 		<div id="score-backdrop">
 			<canvas id="score-display" width="150" height="50"></canvas>
 		</div>
 	</div>
 
 	<div id="map-canvas"></div>
+
+	<div class="modal" id="intro-modal">
+		<h3>Welcome</h3>
+		<p>Use your arrow keys to guide the snake to the apples.</p>
+		<p>Don't hit the edges of the screen, yourself, or a dead-end street!</p>
+
+		<input type="text" id="intro-location" placeholder="Enter a Location" />
+
+		<a href="#" id="intro-play">Let's Play</a>
+
+
+	</div>
+
   </body>
 </html>

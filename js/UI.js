@@ -26,6 +26,8 @@ var UI = {
 
 		this.scoreDisplay = display;
 
+		$('#intro-modal').modal();
+
 	},
 
 	// Called by MapController to 
@@ -62,7 +64,6 @@ var UI = {
 	overpassLoaded: function() {
 
 		dropFood();				// via MapController
-		console.log('done');
 		SnakeController.run();
 
 
@@ -75,6 +76,17 @@ var UI = {
 
 	userEndGame: function() {
 
+	},
+
+	armageddon: function() {
+
+		// TODO Pause the Snake
+		// Display Modal Window
+
 	}
 
 }
+
+$(window).resize(function() {
+	UI.armageddon();
+})
