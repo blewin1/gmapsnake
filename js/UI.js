@@ -53,7 +53,7 @@ var UI = {
 
 		dropFood();				// via MapController
 		console.log('done');
-
+		SnakeController.run();
 
 
 	},

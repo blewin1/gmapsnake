@@ -10,11 +10,11 @@ var SnakeDraw = {
 			position: coord,
 			map: map,
 		});
-		markers.push(marker);
+		this.markers.push(marker);
 
 		// If Snake Has Not Grown, Remove Last Point
-		if (!hasGrown && markers.length > 0) {
-			markers.pop().setMap(null)
+		if (!hasGrown && this.markers.length > 0) {
+			this.markers.pop().setMap(null)
 		}
 
 	}
