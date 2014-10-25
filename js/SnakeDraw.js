@@ -2,23 +2,18 @@ var SnakeDraw = {
 
 	markers: [],
 
-	drawOnMap: function(coords) {
+	drawNewHead: function(coord, hasGrown) {
+		var marker =  new google.maps.Marker({
+			position: coords[i],
+			map: map,
+		});
+		markers.push(marker);
 
-		// Remove Old Markers
-		for (var i in markers) {
-			markers[i].setMap(null);
+		// If Snake Has Not Grown, Remove Last Point
+		if (!hasGrown && markers.length > 0) {
+			markers.pop().setMap(null)
 		}
-		markers = [];
 
-		// Draw New Markers
-		for (var i in coords) {
-			var marker =  new google.maps.Marker({
-			    position: coords[i],
-			    map: map,
-			});
-			markers.push(marker);
-
-		}
 	}
 
 }

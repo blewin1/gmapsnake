@@ -18,14 +18,18 @@ var UI = {
 
 		showControls();		// via MapController
 
+		// Temporary Until UI is Done
+		this.mapLockAndLoad();
+
 	},
 
 	// User Has Specified Position, Call Load Seconday Data
 	mapLockAndLoad: function() {
 
-		hideCountrols();			// via MapController
+		hideControls();			// via MapController
 
-		bounds = map.getBounds();
+		bounds = getBounds();//getBounds();
+		console.log(bounds);
 		var minLat = Math.min(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
 		var maxLat = Math.max(bounds.getNorthEast().lat(), bounds.getSouthWest().lat());
 		var minLng = Math.min(bounds.getNorthEast().lng(), bounds.getSouthWest().lng());
@@ -39,6 +43,7 @@ var UI = {
 	overpassLoaded: function() {
 
 		dropFood();				// via MapController
+		console.log('done');
 
 
 

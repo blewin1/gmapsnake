@@ -7,6 +7,7 @@
 var map;
 
 function initialize() {
+	console.log('init');
   var mapOptions = {
     zoom: 15
   };
@@ -33,6 +34,9 @@ function initialize() {
     // Browser doesn't support Geolocation
     handleNoGeolocation(false);
   }
+
+  UI.mapLoaded();
+
 }
 
 function handleNoGeolocation(errorFlag) {
@@ -104,4 +108,4 @@ function getBounds () {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-window.setTimeout(dropFood,5000);
+//window.setTimeout(dropFood,5000);
