@@ -15,8 +15,8 @@
  	longitude: 0,
  	length: 1,
  	current: 0,
- 	next: 0,
- 	step: 0.001,
+ 	next: -1,
+ 	step: 0.0001,
 
  	coveredNodes: [],
  	lose : false,
@@ -26,10 +26,9 @@
  		var min = -1;
  		var minDistance = 0;
  		for(i = 0; i < Roads.nodes.length; i++){
- 			var latdiff = (map.getCenter().lat - Roads.nodes[i].lat);
- 			var lngdiff = (map.getCenter().lng - Roads.nodes[i].lng);
+ 			var latdiff = (map.getCenter().lat() - Roads.nodes[i].lat);
+ 			var lngdiff = (map.getCenter().lng() - Roads.nodes[i].lng);
  			var D = Math.sqrt(latdiff*latdiff + lngdiff*lngdiff);
-
  			if(min == -1){
  				minDistance = D;
  				min = i;
@@ -41,6 +40,7 @@
  				}
  			}
  		}
+
  		this.current = min;
  		//console.log(this);
  		this.latitude = Roads.nodes[min].lat;
@@ -50,30 +50,59 @@
  		//console.log(this)
  		//console.log(this.latitude);
  		//console.log(this.longitude);
- 		this.setNextLocation();
+ 		min = -1;
+ 		var location = this;
+ 		 	$.each(Roads.nodes[this.current].neighbors, function (i) {
+ 				var angle = 0;
+ 				var minangle = 0;
+ 					//console.log(Roads.nodes[location.current])
+ 					angle = Math.atan2(Roads.nodes[Roads.nodes[location.current].neighbors[i]].lng - location.longitude, Roads.nodes[Roads.nodes[location.current].neighbors[i]].lat - location.latitude);
+ 					angle = angle + Math.PI + .1;
+					//angle = Math.atan2(location.longitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lng , location.latitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lat);
+ 					
+ 					/*if (angle < 0) {angle = angle + 2*Math.PI}
+ 					angle = angle * 180 / Math.PI;*/
+
+ 					if(min == -1) {
+ 						min = Roads.nodes[location.current].neighbors[i];
+ 						minangle = Math.abs(location.direction - angle);
+ 						location.motion = angle;
+ 					}
+ 					else {
+ 						if (Math.abs(location.direction-angle) < minangle) { 
+ 							min = Roads.nodes[location.current].neighbors[i];
+ 							minangle = Math.abs(location.direction - angle);
+ 							location.motion = angle;
+ 						}
+ 					}
+ 					location.next = min;
+ 					console.log(min);
+ 			});
  		//console.log(this);
  				//console.log(this.latitude);
- 		//console.log(this.longitude);
+ 		console.log(this.next);
  	},
 
  	run: function() {
  		this.init();
- 		 	console.log(this.current);
- 			console.log(this.next);
  		var self = this;
  		var interval = setInterval( function () {
  			SnakeDraw.drawNewHead(self.latitude, self.longitude, false/*eated*/);
  			self.setNextLocation();
+ 			console.log(self.next);
+ 			SnakeDraw.drawNewHead(Roads.nodes[self.next].lat, Roads.nodes[self.next].lng, false)
  			if(this.lose) {
  				clearInterval(interval);
  			}
- 		}, 500);
+ 		}, 250);
  	},
 
  	setNextLocation: function() {
  		// check direction of motion
  		// if at an interesection make decision of next intersection to move towards
- 		//console.log(this.latitude);
+ 		console.log(this.next);
+
+
  		if(this.latitude == Roads.nodes[this.next].lat && this.longitude == Roads.nodes[this.next].lng) {
  			//find next "next"
  			//	goto index of "next"
@@ -88,22 +117,27 @@
  			 		//console.log(this.latitude);
  			$.each(Roads.nodes[this.next].neighbors, function (i) {
  				var angle = 0;
- 
+ 				 	console.log(i);
+
+ 					console.log(Roads.nodes[Roads.nodes[location.next].neighbors[i]]);
  				if(Roads.nodes[location.next].neighbors[i] != location.current) {
 
- 					angle = Math.atan2(Roads.nodes[Roads.nodes[location.next].neighbors[i]].lng - location.longitude, Roads.nodes[Roads.nodes[location.next].neighbors[i]].lat - location.latitude);
 
+ 					angle = Math.atan2(Roads.nodes[Roads.nodes[location.next].neighbors[i]].lng - location.longitude, Roads.nodes[Roads.nodes[location.next].neighbors[i]].lat - location.latitude);
+ 					
+					//angle = Math.atan2(location.longitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lng , location.latitude - Roads.nodes[Roads.nodes[location.next].neighbors[i]].lat);
+ 					
  					/*if (angle < 0) {angle = angle + 2*Math.PI}
  					angle = angle * 180 / Math.PI;*/
 
  					if(min == -1) {
- 						min = i;
+ 						min = Roads.nodes[location.current].neighbors[i];
  						minangle = Math.abs(location.direction - angle);
- 						motion = angle;
+ 						location.motion = angle;
  					}
  					else {
  						if (Math.abs(location.direction-angle) < minangle) { 
- 							min = i;
+ 							min = Roads.nodes[location.current].neighbors[i];
  							minangle = Math.abs(location.direction - angle);
  							location.motion = angle;
  						}
@@ -112,10 +146,9 @@
  			});
 
  			//	set minimum angle to next
-
  			this.current = this.next;
  			this.next = min;
-
+ 			
 
  		} 
  		//Move toward next node
@@ -125,20 +158,19 @@
  		var D = Math.sqrt(latdiff*latdiff + lngdiff*lngdiff)
 
 
- 		if (D < this.step) {
+ 		if (D < 2*this.step) {
  			this.latitude = Roads.nodes[this.next].lat;
  			this.longitude = Roads.nodes[this.next].lng;
  		}
 
  		else {
- 			this.latitude = this.latitude + this.step * Math.cos(this.motion/* 2 * Math.PI / 360*/);
+ 			this.latitude = this.latitude - this.step * Math.cos(this.motion/* 2 * Math.PI / 360*/);
  			this.longitude = this.longitude + this.step * Math.sin(this.motion /* 2 * Math.PI / 360*/);
  		}
- 		console.log(D);
- 		var test = Math.atan2(Roads.nodes[this.next].lng - Roads.nodes[this.current].lng, Roads.nodes[this.next].lat - Roads.nodes[this.current].lat)* 180 / Math.PI;
- 		if (test < 0) {
- 			test = test + 360;
- 		}
+ 		//console.log(D);
+ 		var test = Math.atan2(Roads.nodes[this.next].lng - Roads.nodes[this.current].lng, Roads.nodes[this.next].lat - Roads.nodes[this.current].lat);
+ 		//console.log(test);
+ 		//console.log(this.motion);
  		// otherwise increment direction (long = long + stepsize*cos(direction_of_movement), lat = lat + stepsize*sin(direction_of_movement))
  		//  if moves past destination node snap back to node
  		//  --
